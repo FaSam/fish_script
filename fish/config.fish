@@ -6,14 +6,14 @@ alias iq="cd /Users/Faraz/development/iq"
 
  
 #alias "gst"="clear; and git pull; and git status"
-alias "g-l"="gitg"
+#alias "g-l"="gitg"
+#alias "g-a"="clear; and git pull; and git add -A"
 alias "g-master"="git checkout master"
 alias "g-new-b"="git checkout -b "
-alias "g-a"="clear; and git pull; and git add -A"
-alias "g-ch"="git checkout "
-alias "g-co"="git pull; and git commit -m"
-alias "g-p"="git pull"
-alias "ga"="git pull; and git add "
+alias "gch"="git checkout "
+alias "gco"="git commit -m"
+alias "gp"="git pull"
+alias "ga"="git add "
 alias "gd"="git diff "
 
 
@@ -22,29 +22,32 @@ function show_list
 	echo "--0-- exit" 
 	for line in (git status -s)
 		set i (math $i + 1 )
-
 		echo "--$i-- $line"
 	end
 end
 
 function gst
 	show_list
+	read -P "Which command? " command 
+	if test "$command" = "0"
+		return
+	end
 	read -P "Which line number? " number
-	if test "$number" != "0"
+	if test "$number" != "0" 
 		set git_list (git status -s)
-		git diff (string split " " -- $git_list[$number])[3]
+		eval $command (string split " " -- $git_list[$number])[3]
 	  gst		
 	end
 end
 
-function gd
+function _gd
   clear
   git diff $argv
   git status
 	git pull
 end 
 
-function ga
+function _ga
   clear
   git pull
   git add $argv
