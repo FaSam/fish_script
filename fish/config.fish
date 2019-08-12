@@ -3,7 +3,6 @@ rvm default
 set -g -x fish_greeting "Hallo mein Schatz"
 alias iq="cd /Users/Faraz/development/iq"
 
-
  
 #alias "gst"="clear; and git pull; and git status"
 #alias "g-l"="gitg"
