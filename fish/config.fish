@@ -17,12 +17,29 @@ alias "ga"="git add "
 alias "gd"="git diff "
 
 
+function _gd
+  clear         
+  git diff $argv
+  git status
+	git pull
+end 
+
+function _ga
+  clear
+  git pull
+  git add $argv
+  git status
+end 
+
 function show_list
 	set i 0
 	echo "--0-- exit" 
 	for line in (git status -s)
-		set i (math $i + 1 )
-		echo "--$i-- $line"
+		set is_added  (string split " " -- $line)[1]
+		if test "$is_added" != "M"
+			set i (math $i + 1 )
+			echo "--$i-- $line"
+		end
 	end
 end
 
@@ -40,25 +57,6 @@ function gst
 	end
 end
 
-function _gd
-  clear
-  git diff $argv
-  git status
-	git pull
-end 
-
-function _ga
-  clear
-  git pull
-  git add $argv
-  git status
-end 
-
-function g-co
-	git pull
-  git commit -m $argv
-  git push 
-end
 
 alias "rs"="rails s"
 alias "rdb"="rails db"
